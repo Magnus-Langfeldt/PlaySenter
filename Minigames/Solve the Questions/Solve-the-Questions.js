@@ -3,7 +3,7 @@ let nextBtn = document.getElementById('nextBtn')
 let riddleEl = document.getElementById('riddle')
 let inputEl = document.getElementById('inputEl')
 let imgEl = document.querySelectorAll("img")
-let quizContainerEl = document.querySelector('.quiz-container')
+let quizContainerEl = document.getElementById('quiz-container')
 let questionContainerEl = document.querySelector('.question-container')
 let checkBtn = document.getElementById ('checkBtn')
 
@@ -20,6 +20,7 @@ checkBtn.addEventListener('click', sjekkSvar)
 
 document.addEventListener('keyup', cheat)
 
+// jukse-kode som markerer riktig svar ved å trykke på C-tasten
 function cheat(e) {
     if (e.code === "KeyC") {
         document.querySelector('input[value="c"]').checked = true
@@ -27,7 +28,7 @@ function cheat(e) {
     }
 }
 
-// Lager en funksjon som henter spørsmålene
+// Lager en funksjon som henter spørsmålene i en liste, der verdiene er objekter. 
 async function getQuestions(){
     let url = "https://the-trivia-api.com/v2/questions"
     console.log(url)
@@ -40,6 +41,7 @@ async function getQuestions(){
     questions()
 }
 
+// Funksjon som lager spørsmålene fra arrayet fra forrige funksjon
 function questions(){
     if (j===3 || i===10) {
         // Sjekker om du har vunnet eller tapt
@@ -153,6 +155,7 @@ function questions(){
     i++
 }
 
+// Funksjon som sjekker om svaret er riktig eller feil
 function sjekkSvar() {
     // Henter alle radio elementene 
     let radioEls = document.querySelectorAll('input[type="radio"]')
@@ -211,6 +214,7 @@ function sjekkSvar() {
     nextBtn.style.display = "block"
 }
 
+// Funksjon for når du har fått 3 feil eller har kommet gjennom alle 10 spørsmål.
 function gameOver() {
     // Erstatter innholdet i quiz containeren med en tilbakemelding basert på om du vant eller tapte
     quizContainerEl.innerHTML = `<h3 id="resultat">${kontroll()}</h3>
@@ -225,6 +229,7 @@ function gameOver() {
     })
 }
 
+// Funksjon som avgjør hva som skal skrives hvis du har vunnet eller tapt i forrige funksjon.
 function kontroll() {
     if (j===3) {
         // Du tapte
@@ -245,4 +250,5 @@ function kontroll() {
     }
 }
 
+// Henter første spørsmål
 getQuestions()

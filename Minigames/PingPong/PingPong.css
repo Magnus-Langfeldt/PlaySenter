@@ -30,7 +30,14 @@ h1 {
     margin-bottom: 30px;
 }
 
-body > div > h3 {
+#winText {
+    width: 510px;
+    font-size: 30px;
+    cursor: pointer;
+    line-height: 1.5;
+}
+
+body > div > h3, #winText {
     border: 5px solid black;
     color: white;
     background-color: rgb(49, 53, 53);
@@ -39,6 +46,7 @@ body > div > h3 {
     margin: 0 auto;
     display: none;
 }
+
 .controls > div {
     display: flex;
     justify-content: center;

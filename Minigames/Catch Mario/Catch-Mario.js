@@ -144,8 +144,8 @@ function selectHole(e) {
         // Hvis elementet som ble trykket på er en bombe, taper du.
         console.log(`It seems like you lost! you got ${score} points!`)
         document.getElementById('points').innerHTML = `
-        <h2 style="margin-left: 0">You Lost!</h2>
-        <h4>You successfully clicked on <br>mario ${score} times, and your best score is ${localStorage.highscore}.</h4>
+        <h2 style="margin: 10px 0;">You Lost!</h2>
+        <h4 style="margin-bottom: 10px;">You successfully clicked on <br>mario ${score} times, and your best score is ${localStorage.highscore}.</h4>
         `
 
         document.getElementById('board').style.borderColor = "darkred"
@@ -154,8 +154,6 @@ function selectHole(e) {
         document.getElementById('points').style.gap = "0"
         document.querySelector('h4').style.marginTop = "0"
         document.getElementById('points').style.flexDirection = "column"
-        btnEl.style.backgroundColor = "darkgreen"
-        btnEl.style.color = "white"
 
         // Den boolske verdien for gameover settes nå til å bli true
         console.log("Gameover! You lost!")

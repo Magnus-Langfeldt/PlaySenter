@@ -57,20 +57,60 @@ window.onload = function () {
 
 function update() {
     requestAnimationFrame(update)
+
+    // Sjekker om en av spillerne har vunnet  
+    if (player1Score>=10 || player2Score>=10) {
+        document.querySelector('h3').style.lineHeight = "1.5"
+        document.querySelector('h3').style.cursor = "pointer"
+
+        document.querySelector('h3').addEventListener('click', refresh)
+        document.getElementById('winText').addEventListener('click', refresh)
+        function refresh(){
+            location.reload()
+        }
+        if (player1Score>=10) {
+            document.querySelector('h3').style.fontSize="19.55px"
+
+            // Velger hvor teksten skal stå etter hvor bred skjermen er.
+            if (window.innerWidth>=1025) {
+                document.getElementById('winText').style.display = "block"
+                document.getElementById('winText').innerHTML = "Player 1 (left player) has won! <br><u>Click on this box to try again.</u>"
+            }
+            else {
+                document.querySelector('h3').innerHTML = "Player 1 (left player) has won! <br>Click on this box to try again."
+            }
+        }
+        else if (player2Score>=10) {
+            document.querySelector('h3').style.fontSize="18.55px"
+
+            // Velger hvor teksten skal stå etter hvor bred skjermen er.
+            if (window.innerWidth>=1025) {
+                document.getElementById('winText').style.display = "block"
+                document.getElementById('winText').innerHTML = "Player 2 (right player) has won! <br> <u>Click on this box to try again.</u>"
+            }
+            else {
+                document.querySelector('h3').innerHTML = "Player 2 (right player) has won! <br>Click on this box to try again."
+            }
+        }
+        return
+    }
+
+    // Tømmer canvas elementet hver gang funksjonen kjøres, og tegner på nytt
     ctx.clearRect(0, 0, canvas.width, canvas.height)
 
-    // spiller 1
     ctx.fillStyle = "white"
+
+    // Oppdaterer spiller 1
     let nextPlayer1Y = player1.y + player1.MovementY
-    if(outsideOfBorders(nextPlayer1Y)) {
+    if(!outsideOfBorders(nextPlayer1Y)) {
         player1.y = nextPlayer1Y
     }
     // Tegner spiller 1
     ctx.fillRect(player1.x, player1.y, player1.width, player1.height)
 
-    // spiller 2
+    // Oppdaterer spiller 2
     let nextPlayer2Y = player2.y + player2.MovementY
-    if (outsideOfBorders(nextPlayer2Y)) {
+    if (!outsideOfBorders(nextPlayer2Y)) {
         player2.y = nextPlayer2Y
     }
 
@@ -89,7 +129,8 @@ function update() {
 
     if (detectCollision(ball, player1)) {
         if (ball.x <= player1.x + player1.width) {
-            ball.MovementX = ball.MovementX * -1 //endrer ballen sin retning langs x-aksen, men beholder farten.
+            ball.MovementX = ball.MovementX * -1 
+            // endrer ballen sin retning langs x-aksen, men beholder farten.
         }
     }
     else if (detectCollision(ball, player2)) {
@@ -98,7 +139,7 @@ function update() {
         }
     }
 
-    // Spillet avsluttes og fordeler poeng
+    // En av spillerne får poeng om baller går ut av canvas elementet på høyre- eller venstre-siden.
     if (ball.x < 0) {
         player2Score ++
         gameOver(1)
@@ -124,6 +165,7 @@ function outsideOfBorders(yAxisPosition) {
     return (yAxisPosition < 0 || yAxisPosition + playerHeight > backgroundHeight)
 }
 
+// Funksjon for å bevege på rekkertene.
 function movePlayer(e) {
     // Spiller 1
     if (e.code === "KeyW" || e.target.id === "upLeft") {
@@ -142,10 +184,12 @@ function movePlayer(e) {
     }
 }
 
+// Funksjon som sjekker om det har skjedd en kollisjon mellom ballen og en spiller.
 function detectCollision (a, b) {
     return a.x < b.x + b.width && a.x + a.width > b.x && a.y < b.y + b.height && a.y + a.height > b.y
 }
 
+// Baller starter i midten igjen og går mot spilleren som tapte.
 function gameOver (ballDirection) {
     ball = {
         x : (backgroundWidth/2)-(ballWidth/2),

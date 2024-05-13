@@ -102,8 +102,8 @@ article-footer {
     "contact-us"
     "sources"
     "quick-links";
-    width: fit-content;
     margin: 0 0;
+    text-align: left;
   }
   footer {
     padding: 15px;
@@ -139,7 +139,6 @@ article-footer {
     "contact-us"
     "sources"
     "quick-links";
-    width: fit-content;
     margin: auto auto;
   }
 }
